@@ -1,0 +1,22 @@
+version: '3'
+
+volumes:
+    web-logs:
+        driver: local
+
+services:
+    web:
+        build: .
+        container_name: web
+        restart: unless-stopped
+        ports:
+            - 8000:8000
+        volumes:
+            - web-logs:/logs
+
+        mem_limit: 128M
+
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
