@@ -4,12 +4,22 @@ import typer
 import uvicorn
 import uvicorn.config
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Query, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
-from app.settings import settings
+from app.settings import settings, static_directory, templates_directory
 
 _typer = typer.Typer()
 app = FastAPI()
+app.mount("/static", StaticFiles(directory=static_directory), name="static")
+templates = Jinja2Templates(directory=templates_directory)
+
+
+@app.get("/webwidget", response_class=HTMLResponse)
+async def web_widget(request: Request, name: str = Query("", description="当前用户名称, 不传随机生成", max_length=128)):
+    return templates.TemplateResponse("web-widget.html", {"request": request, "name": name, **settings.dict()})
 
 
 @_typer.command()

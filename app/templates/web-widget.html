@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LC Widget</title>
+    <style>
+      html {
+          height: 100%;
+          background-image: url("{{background_image}}");
+          background-repeat: no-repeat;
+          background-size: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- you can add JS file and script below-->
+  </body>
+  <script type="text/javascript" src="{{sdk_src}}"></script>
+  <script>
+    var widget = document.createElement("laiye-chatbot-widget");
+    document.body.appendChild(widget);
+    new ChatbotWidget({
+      container: widget,
+      agentId: '{{agentId}}',
+      channelId: '{{channelId}}',
+      historyChannelId: '{{historyChannelId}}',
+      locale: 'zh-CN',
+      publicAssetsPath: '{{publicAssetsPath}}',
+      // '服务账号ID，可在“平台菜单-服务账号”中获取'
+      serviceAccountId: '{{serviceAccountId}}',
+      serviceAccountSecret: '{{serviceAccountSecret}}',
+      // '请输入用户名，如果没有，系统将自动生成'
+      userInfo: {
+        name: '{{name}}',
+      },
+      // '请输入需要传回的metadata，如没有，可不填'
+      metadata: '',
+      // 'Chatbot服务器URL'
+      request: {
+        baseUrl: '{{baseUrl}}'
+      }
+    }).init()
+  </script>
+</html>

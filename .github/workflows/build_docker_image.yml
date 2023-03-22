@@ -2,7 +2,7 @@ name: Build and push docker image
 on:
   push:
     branches:
-      - 'develop'
+      - 'main'
 jobs:
   docker:
     runs-on: ubuntu-latest

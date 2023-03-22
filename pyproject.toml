@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "app"
 version = "0.0.1"
-description = ""
+description = "Laiye Conversational AI Platform Web Widget Page Service"
 authors = ["wangqs <wqs1639@gmail.com>"]
 
 repository = "repository"
@@ -20,6 +20,7 @@ pretty-errors = "^1.2.25"
 ipython = "^8.11.0"
 fastapi = "^0.95.0"
 uvicorn = "^0.21.1"
+Jinja2 = "^3.1.2"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.2.0"
