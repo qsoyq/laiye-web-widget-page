@@ -108,6 +108,7 @@ exclude = ['^venv/', '^__init__\.py$']
 [[tool.mypy.overrides]]
 module = [
     "pretty_errors",
+    "jinja2",
 ]
 ignore_missing_imports = true
 
