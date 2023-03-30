@@ -22,6 +22,11 @@ async def web_widget(request: Request, name: str = Query("", description="当前
     return templates.TemplateResponse("web-widget.html", {"request": request, "name": name, "env": env, **settings.dict()})
 
 
+@app.get("/health")
+def health():
+    return "ok"
+
+
 @_typer.command()
 def run_http(
     host: str = typer.Option("0.0.0.0", '--host', '-h'),

@@ -1,19 +1,14 @@
 version: '3'
 
-volumes:
-    web-logs:
-        driver: local
-
 services:
     web:
         build: .
         container_name: web
+        platform: linux/amd64
         env_file: .env
         restart: unless-stopped
         ports:
             - 8000:8000
-        volumes:
-            - web-logs:/logs
 
         mem_limit: 128M
 
@@ -21,3 +16,9 @@ services:
             driver: json-file
             options:
                 max-size: 10m
+
+        healthcheck:
+            test: curl -fs http://localhost:8000/health || exit 1
+            interval: 2s
+            timeout: 1s
+            retries: 3
