@@ -1,31 +1,33 @@
 FROM python:3.10 as builder
 
-COPY . .
-
 RUN pip install poetry
 
-RUN poetry config virtualenvs.create false
+COPY pyproject.toml pyproject.toml
 
-RUN poetry build 
+COPY poetry.lock poetry.lock
+
+RUN poetry install --no-dev
+
+RUN poetry run pip freeze > requirements.txt 
 
 FROM python:3.10-alpine as prod
 
-ENV TZ=Asia/Shanghai
+RUN pip install pretty_errors && python -m pretty_errors -s
 
-ENV LOG_LEVEL=20
+COPY --from=0 requirements.txt requirements.txt 
 
-ENV DEBUG=f
+RUN pip install -r requirements.txt
 
 RUN mkdir -p /logs
 
-COPY --from=0 /dist /dist
+COPY app /app/app
 
-RUN pip install /dist/*.whl
+WORKDIR /app
 
-RUN rm -rf /dist
+ENV PYTHONPATH /app
 
-RUN python -m pretty_errors -s
+ENV TZ=Asia/Shanghai
 
 EXPOSE 8000
 
-CMD main
+CMD python app/main.py

@@ -19,7 +19,7 @@ templates = Jinja2Templates(directory=templates_directory)
 
 @app.get("/webwidget", response_class=HTMLResponse)
 async def web_widget(request: Request, name: str = Query("", description="当前用户名称, 不传随机生成", max_length=128), env: str = Query("SKETCH", description="LC发布环境")):
-    return templates.TemplateResponse("web-widget.html", {"request": request, "name": name, env: "env", **settings.dict()})
+    return templates.TemplateResponse("web-widget.html", {"request": request, "name": name, "env": env, **settings.dict()})
 
 
 @_typer.command()
